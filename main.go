@@ -20,7 +20,10 @@ func main() {
 }
 func timeHandler(w http.ResponseWriter, r *http.Request) {
 	sse := datastar.NewSSE(w, r)
-	sse.MergeFragments(`<div id="mytime">`+time.Now().Format("15:04:05.0000")+`</div>`)
+	for n := 0; n < 500; n++ {
+		sse.MergeFragments(`<div id="mytime">` + time.Now().Format("15:04:05.0000") + `</div>`)
+		time.Sleep(30 * time.Millisecond)
+	}
 }
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Hello World\n")
