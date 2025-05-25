@@ -12,7 +12,7 @@
   <span data-show="$boiling">: water boiled!</span>
   <span data-show="$steamed">: water steamed away!</span>
   <span data-show="$frozen">: water turned to ice!</span>
-	<p><span data-text="($tmp - 32)*5/9"></span> Celcius</p>
+	<p><span data-text="(($tmp - 32)*5/9).toFixed(1)"></span>° Celcius</p>
 
 	<button data-on-click="@get('/time')">Get time</button>
   This should run for 15 seconds then stop. Meanwhile try boiling water.
