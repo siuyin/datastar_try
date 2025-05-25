@@ -46,6 +46,7 @@ func boilWaterHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	sse.MergeFragments(`<div id="tmpincr">Changing temperature: ` + fmt.Sprintf("%f with %f = 212°F", startTmp, 212.0-startTmp))
+	sse.MergeFragments(`<div id="tmpdone"> water boiled!</div>`)
 	sse.MergeSignals([]byte("{tmp: 212}"))
 }
 
