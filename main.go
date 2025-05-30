@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/siuyin/dflt"
 	datastar "github.com/starfederation/datastar/sdk/go"
 )
 
@@ -19,7 +20,8 @@ func main() {
 	http.HandleFunc("/boilwater", boilWaterHandler)
 
 	log.Println("Starting HTTP server...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := dflt.EnvString("PORT", "8080")
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +40,6 @@ func boilWaterHandler(w http.ResponseWriter, r *http.Request) {
 	if err := datastar.ReadSignals(r, sig); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
-	log.Println(sig.Tmp)
 
 	sse := datastar.NewSSE(w, r)
 	startTmp, err := sig.Tmp.Float64()
