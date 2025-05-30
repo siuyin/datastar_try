@@ -43,7 +43,7 @@ jobs:
       # FIXME: needs API KEY and PORT != 8080 (take), say 8082
       - name: Deploy
         run: |
-          cd /home/runner/work/gmap/gmap
+          cd /home/runner/work/datastar_try/datastar_try
           pwd
           ls -al
           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -p 22322 siuyin@rasp.beyondbroadcast.com ps aux|grep datastar_try || true
