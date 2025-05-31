@@ -57,9 +57,9 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 
 func sprinttimeHandler(w http.ResponseWriter, r *http.Request) {
 	sse := datastar.NewSSE(w, r)
-	for n := 0; n < 50; n++ {
+	for n := 0; n < 10; n++ {
 		sse.MergeFragments(`<div id="sprinttime">` + time.Now().Format("15:04:05.0000") + `</div>`)
-		time.Sleep(30 * time.Millisecond)
+		time.Sleep(10 * time.Millisecond)
 	}
 }
 
