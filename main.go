@@ -17,7 +17,7 @@ var baseURL = "/"
 
 func main() {
 	baseURL = dflt.EnvString("BASE_URL", "/")
-	http.Handle(baseURL, http.FileServerFS(public.Content))
+	http.Handle("/", http.FileServerFS(public.Content))
 	http.HandleFunc(baseURL+"time", timeHandler)
 	http.HandleFunc(baseURL+"hello", helloHandler)
 	http.HandleFunc(baseURL+"boilwater", boilWaterHandler)
