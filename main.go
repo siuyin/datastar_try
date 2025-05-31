@@ -48,9 +48,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
 	sse := datastar.NewSSE(w, r)
-	for n := 0; n < 1000; n++ {
+	for n := 0; n < 50; n++ {
 		sse.MergeFragments(`<div id="mytime">` + time.Now().Format("15:04:05.0000") + `</div>`)
-		time.Sleep(15 * time.Millisecond)
+		time.Sleep(300 * time.Millisecond)
 	}
 }
 
