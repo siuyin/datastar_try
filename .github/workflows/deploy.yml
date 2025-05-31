@@ -40,7 +40,7 @@ jobs:
           ls -al
           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -p 22322 siuyin@rasp.beyondbroadcast.com ls -al
 
-      # FIXME: needs API KEY and PORT != 8080 (take), say 8082
+      # needs BASE_URL and PORT != 8080 (taken), say 8082
       - name: Deploy
         run: |
           cd /home/runner/work/datastar_try/datastar_try
@@ -49,5 +49,5 @@ jobs:
           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -p 22322 siuyin@rasp.beyondbroadcast.com ps aux|grep datastar_try || true
           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -p 22322 siuyin@rasp.beyondbroadcast.com killall datastar_try || true
           scp -P 22322 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no datastar_try siuyin@rasp.beyondbroadcast.com:
-          ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -p 22322 siuyin@rasp.beyondbroadcast.com PORT=8082 nohup ./datastar_try 2>&1 </dev/null &
+          ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -p 22322 siuyin@rasp.beyondbroadcast.com PORT=8082 BASE_URL="/dstar/" nohup ./datastar_try 2>&1 </dev/null &
           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no  -p 22322 siuyin@rasp.beyondbroadcast.com ps aux|grep datastar_try 

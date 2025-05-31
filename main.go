@@ -13,11 +13,14 @@ import (
 	datastar "github.com/starfederation/datastar/sdk/go"
 )
 
+var baseURL = "/"
+
 func main() {
-	http.Handle("/", http.FileServerFS(public.Content))
-	http.HandleFunc("/time", timeHandler)
-	http.HandleFunc("/hello", helloHandler)
-	http.HandleFunc("/boilwater", boilWaterHandler)
+	baseURL = dflt.EnvString("BASE_URL", "/")
+	http.Handle(baseURL, http.FileServerFS(public.Content))
+	http.HandleFunc(baseURL+"time", timeHandler)
+	http.HandleFunc(baseURL+"hello", helloHandler)
+	http.HandleFunc(baseURL+"boilwater", boilWaterHandler)
 
 	log.Println("Starting HTTP server...")
 	port := dflt.EnvString("PORT", "8080")
