@@ -48,10 +48,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
 	sse := datastar.NewSSE(w, r)
-	w.Header().Set("X-Accel-Buffering", "no")
-	for n := 0; n < 500; n++ {
+	for n := 0; n < 150; n++ {
 		sse.MergeFragments(`<div id="mytime">` + time.Now().Format("15:04:05.0000") + `</div>`)
-		time.Sleep(30 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 	}
 }
 
@@ -65,7 +64,6 @@ func boilWaterHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sse := datastar.NewSSE(w, r)
-	w.Header().Set("X-Accel-Buffering", "no")
 	startTmp, err := sig.Tmp.Float64()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
