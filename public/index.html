@@ -14,12 +14,12 @@
   <span data-show="$frozen">: water turned to ice!</span>
 	<p><span data-text="(($tmp - 32)*5/9).toFixed(1)"></span>° Celcius</p>
 
-	<button data-on-click="@get('/time')">Get time</button>
+  <button data-on-click="@get('{{.URL}}time')">Get time</button>
   This should run for 15 seconds then stop. Meanwhile try boiling water.
 	<div id="mytime"></div>
 
   <p>
-    <button data-on-click="@get('/boilwater')">Boil water</button>
+  <button data-on-click="@get('{{.URL}}boilwater')">Boil water</button>
     <div id="tmpincr"></div>
   </p>
 

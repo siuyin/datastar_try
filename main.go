@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"example/public"
 	"fmt"
+	"html/template"
 	"io"
 	"log"
 	"net/http"
@@ -13,18 +14,36 @@ import (
 	datastar "github.com/starfederation/datastar/sdk/go"
 )
 
-var baseURL = "/"
+var (
+	baseURL = "/"
+	tmpl    *template.Template
+)
+
+func init() {
+	baseURL = dflt.EnvString("BASE_URL", "/")
+	tmpl = template.Must(template.ParseFS(public.Content, "*.html"))
+}
+
+type base struct {
+	URL string
+}
 
 func main() {
-	baseURL = dflt.EnvString("BASE_URL", "/")
 	http.Handle("/", http.FileServerFS(public.Content))
-	http.HandleFunc(baseURL+"time", timeHandler)
-	http.HandleFunc(baseURL+"hello", helloHandler)
-	http.HandleFunc(baseURL+"boilwater", boilWaterHandler)
+	http.HandleFunc("/{$}", indexHandler)
+	http.HandleFunc("/time", timeHandler)
+	http.HandleFunc("/hello", helloHandler)
+	http.HandleFunc("/boilwater", boilWaterHandler)
 
 	log.Println("Starting HTTP server...")
 	port := dflt.EnvString("PORT", "8080")
 	log.Fatal(http.ListenAndServe(":"+port, nil))
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	if err := tmpl.ExecuteTemplate(w, "index.html", base{URL: baseURL}); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
 func timeHandler(w http.ResponseWriter, r *http.Request) {
