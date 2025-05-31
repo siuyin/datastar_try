@@ -32,6 +32,7 @@ func main() {
 	http.Handle("/", http.FileServerFS(public.Content))
 	http.HandleFunc("/{$}", indexHandler)
 	http.HandleFunc("/time", timeHandler)
+	http.HandleFunc("/sprinttime", sprinttimeHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/boilwater", boilWaterHandler)
 
@@ -51,6 +52,14 @@ func timeHandler(w http.ResponseWriter, r *http.Request) {
 	for n := 0; n < 50; n++ {
 		sse.MergeFragments(`<div id="mytime">` + time.Now().Format("15:04:05.0000") + `</div>`)
 		time.Sleep(300 * time.Millisecond)
+	}
+}
+
+func sprinttimeHandler(w http.ResponseWriter, r *http.Request) {
+	sse := datastar.NewSSE(w, r)
+	for n := 0; n < 50; n++ {
+		sse.MergeFragments(`<div id="sprinttime">` + time.Now().Format("15:04:05.0000") + `</div>`)
+		time.Sleep(30 * time.Millisecond)
 	}
 }
 

@@ -15,8 +15,13 @@
 	<p><span data-text="(($tmp - 32)*5/9).toFixed(1)"></span>° Celcius</p>
 
   <button data-on-click="@get('{{.URL}}time')">Get time</button>
-  This should run for 15 seconds then stop. Meanwhile try boiling water.
+  This should run for 15 seconds, updating every 0.3s, then stop. Meanwhile try boiling water.
 	<div id="mytime"></div>
+
+  <p>
+  <button data-on-click="@get('{{.URL}}sprinttime')">Sprint time</button>
+  This should run for 1.5 second, updating every 30ms, then stop. Longer streams cause garbage collection on a 256MB raspberry pi. 
+	<div id="sprinttime"></div>
 
   <p>
   <button data-on-click="@get('{{.URL}}boilwater')">Boil water</button>
